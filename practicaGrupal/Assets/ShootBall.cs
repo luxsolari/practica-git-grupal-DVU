@@ -11,6 +11,9 @@ public class ShootBall : MonoBehaviour
     public GameObject positionToRespawn;
     public float forceToShoot;
 
+    [SerializeField]
+    AudioClip shootSFX;
+
     private float shotRate = 0.5f;
     private float shootRateTime = 0;
 
@@ -25,24 +28,25 @@ public class ShootBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > shootRateTime)
-        {
-            if (playerInputOnMOveCube.Shoot.triggered)
-            {
-                GameObject currentBullet = Instantiate(bulletToShot, positionToRespawn.transform.position, cam.transform.rotation);
-                currentBullet.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceToShoot, ForceMode.VelocityChange);
-                shootRateTime = Time.time + shotRate;
-                Destroy(currentBullet, 5f);
+        InstantiateBall();
 
+    }
+    void InstantiateBall()
+    {
+        if (playerInputOnMOveCube.Shoot.triggered)
+        {
+            if (Time.time > shootRateTime)
+            {
+                if (playerInputOnMOveCube.Shoot.triggered)
+                {
+                    AudioSource.PlayClipAtPoint(this.shootSFX, gameObject.transform.position);
+                    GameObject currentBullet = Instantiate(bulletToShot, positionToRespawn.transform.position, cam.transform.rotation);
+                    currentBullet.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceToShoot, ForceMode.VelocityChange);
+                    shootRateTime = Time.time + shotRate;
+                    Destroy(currentBullet, 5f);
+
+                }
             }
         }
-
-        //if (playerInputOnMOveCube.Shoot.triggered)
-        //{
-        //    GameObject currentBullet = Instantiate(bulletToShot, positionToRespawn.transform.position, cam.transform.rotation);
-        //    currentBullet.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceToShoot, ForceMode.VelocityChange);
-        //    Destroy(currentBullet, 5f);
-
-        //}
     }
 }
