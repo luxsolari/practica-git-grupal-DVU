@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class gameOver : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,11 @@ public class gameOver : MonoBehaviour
         if (this.gameObject.tag == "GoalRight" && other.gameObject.tag == "Ball")
         {
             Debug.Log("Gol en el arco derecho");
+        }
+
+        if (this.gameObject.tag == "GoalLeft" || this.gameObject.tag == "GoalRight")
+        {
+             SceneManager.LoadScene("WinScene");
         }
     }
 }
