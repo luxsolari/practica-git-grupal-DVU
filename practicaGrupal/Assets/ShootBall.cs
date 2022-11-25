@@ -10,6 +10,10 @@ public class ShootBall : MonoBehaviour
     public Camera cam;
     public GameObject positionToRespawn;
     public float forceToShoot;
+    [SerializeField]
+    AudioClip shootSFX;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +25,18 @@ public class ShootBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InstantiateBall();
+        
+    }
+    void InstantiateBall()
+    {
         if (playerInputOnMOveCube.Shoot.triggered)
         {
+            
             GameObject currentBullet = Instantiate(bulletToShot, positionToRespawn.transform.position, cam.transform.rotation);
             currentBullet.GetComponent<Rigidbody>().AddForce(cam.transform.forward * forceToShoot, ForceMode.VelocityChange);
             Destroy(currentBullet, 5f);
-
+            AudioSource.PlayClipAtPoint(this.shootSFX, gameObject.transform.position);
         }
     }
 }
