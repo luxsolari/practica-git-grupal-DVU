@@ -30,7 +30,7 @@ public class gameOver : MonoBehaviour
             Debug.Log("Gol en el arco derecho");
         }
 
-        if (this.gameObject.tag == "GoalLeft" || this.gameObject.tag == "GoalRight")
+        if ((this.gameObject.tag == "GoalLeft" && other.gameObject.tag == "Ball") || (this.gameObject.tag == "GoalRight" && other.gameObject.tag == "Ball"))
         {
              SceneManager.LoadScene("WinScene");
         }
